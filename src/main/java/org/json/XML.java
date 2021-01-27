@@ -41,7 +41,9 @@ import java.util.Iterator;
  */
 @SuppressWarnings("boxing")
 public class XML {
-
+    public static void helper(){
+        System.out.println("hello world");
+    }
     /** The Character '&amp;'. */
     public static final Character AMP = '&';
 
