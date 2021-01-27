@@ -24,13 +24,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Iterator;
-
+import java.util.*;
+import javax.json.*;
 
 /**
  * This provides static methods to convert an XML text into a JSONObject, and to
@@ -41,8 +42,17 @@ import java.util.Iterator;
  */
 @SuppressWarnings("boxing")
 public class XML {
-    public static void helper(){
-        System.out.println("hello world");
+    public static JSONObject toJSONObject(Reader reader, JSONPointer path, JSONObject replacement)  {
+        JSONObject json = XML.toJSONObject(reader);
+        String [] temp = path.toString().split("~1");
+        JSONObject tempObj = json;
+        for(int i = 1; i < temp.length - 2; i++){
+            tempObj = tempObj.getJSONObject(temp[i]);
+        }
+        JSONArray Arr = tempObj.getJSONArray(temp[temp.length - 2]);
+        Arr.remove(Integer.parseInt(temp[temp.length - 1]));
+        Arr.put(replacement);
+        return json;
     }
     /** The Character '&amp;'. */
     public static final Character AMP = '&';
